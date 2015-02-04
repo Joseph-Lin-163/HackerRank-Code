@@ -4,29 +4,8 @@
 #include <iostream>
 #include <algorithm>
 #include <string>
+#include <bitset>
 using namespace std;
-
-int binToInt(string bin, int M) {
-	int sum = 0;
-	for (int i = 0; i < M; i++) {
-		sum += pow(2,i)*(bin[M-i-1] - 48);
-	}
-	return sum;
-}
-
-void intToBin(int num, int M, char *c) {
-	while (num != 0) {
-		if (num % 2 == 1) {
-			num -= 1;
-			num /= 2;
-			c[--M] = '1';
-		}
-		else {
-			num /= 2;
-			c[--M] = '0';
-		}
-	}
-}
 
 int main() {
     /* Enter your code here. Read input from STDIN. Print output to STDOUT */   
@@ -38,19 +17,26 @@ int main() {
 		This will work for strings of binary where the length is <= 31
 
 		I might come back to this in the future. For now, I want to move onto a different problem.
+
+        ------------------------------------------------------------------------------------------------
+
+        Okay, my friend Jinsol Jung recommended that I use bitsets.
+        This was a great suggestion on his part since it allowed by to bypass the primitive data type 
+        data limitations. Instead of being limited to only 8 bytes, I have a bitset of size 500 (max value).
+        I used 500 and sacrificed space so that I could cover all the cases.
+        In addition, my algorithm still runs on the input M and N (as shown in the for-loops)
+        And, yes, I did have to add one more for loop, but this is relatively trivial.
+        The test cases run in, at most, 0.11 seconds on HackerRank servers.
+
+        Credit to Jinsol Jung for the recommendation of bitset.
     */
     int N, M;
     cin >> N;
     cin >> M;
-    string *temp = new string[N];
-    int bin[N];
+    bitset<500> bitStrings[500];
 
     for (int i = 0; i < N; i++) {
-    	cin >> temp[i];
-    }
-    
-    for (int i = 0; i < N; i++) {
-    	bin[i] = binToInt(temp[i], M);
+    	cin >> bitStrings[i];
     }
 
     int count = 0;
@@ -59,7 +45,13 @@ int main() {
 
     for (int i = 0; i < N; i++) {
     	for (int j = i+1; j < N; j++) {
-    		int temp = bin[i] | bin[j];
+            int temp = 0;
+    		bitset<500> tempBitset = bitStrings[i] | bitStrings[j];
+            for (int k = 0; k < M; k++) {
+                if(tempBitset[k] == 1)
+                    temp++;
+            }
+
     		if (currentMax < temp) {
     			currentMax = temp;
     			count = 1;
@@ -68,15 +60,8 @@ int main() {
     			count++;
     	}
     }
-    char *backToBin = new char[M];
-    intToBin(currentMax, M, backToBin);
-    for (int i = 0; i < M; i++) {
-    	if (backToBin[i] == '1')
-    		numTopics++;
-    }
-    cout << numTopics << endl << count;
+
+    cout << currentMax << endl << count;
     
-    delete [] temp;
-    delete [] backToBin;
     return 0;
 }
