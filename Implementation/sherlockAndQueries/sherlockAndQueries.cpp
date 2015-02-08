@@ -8,6 +8,9 @@ using namespace std;
 
 int main() {
     /* Enter your code here. Read input from STDIN. Print output to STDOUT */   
+
+    // Clearly, this code is wrong, I will revise it as soon as I finish studying
+    // for my classes.
     int N, M;
     int mod = pow(10,9) + 7;
     cin >> N >> M;
@@ -24,8 +27,9 @@ int main() {
     }
 
     long temp = 1;
+    int j = 1;
    	for (int i = 0; i < M; i++) {
-   		if (i % b[i] == 0) {
+   		if (j % b[i] == 0) {
    			temp *= c[i];
    		}
    	}
