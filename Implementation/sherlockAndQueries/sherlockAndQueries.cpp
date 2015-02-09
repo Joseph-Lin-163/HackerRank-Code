@@ -25,10 +25,10 @@ int main() {
         Where A is the product of the terms a1 through an.
     */
     int N, M;
-    int mod = pow(10,9) + 7;
+    long mod = pow(10,9) + 7;
     cin >> N >> M;
     long a[N];
-    int b[M], c[M];
+    long b[M], c[M];
     for (int i = 0; i < N; i++) {
     	cin >> a[i];
     }
@@ -39,6 +39,26 @@ int main() {
     	cin >> c[i];
     }
 
+    // Feels like the overflow is what's getting to me
+    // Need to figure out an easy solution to managing the overflow
+    for (int i = 0; i < M; i++) {
+        for (int j = 1; j <= N; j++) {
+            if (j % b[i] == 0) {
+                a[j-1] *= c[i];
+        }
+    }
+
+    // Attempt 2, got sample case, but still fail
+    /*
+    for (long i = 0; i < M; i++) {
+       for (long j = b[i]; j <= N; j+= b[i]) {
+            a[j-1] *= c[i];
+        }
+    }
+    */
+
+    // Attempt 1, fail
+    /*
     long temp = 1;
     int j = 1;
    	for (int i = 0; i < M; i++) {
@@ -52,7 +72,7 @@ int main() {
     		a[i] *= temp;
     	}
     }
-
+    */
     for (int i = 0; i < N; i++) {
     	cout << (a[i] % mod) << " ";
     }
