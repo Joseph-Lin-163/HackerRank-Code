@@ -29,6 +29,8 @@ int main() {
     cin >> N >> M;
     long a[N];
     long b[M], c[M];
+    long m[N];
+
     for (int i = 0; i < N; i++) {
     	cin >> a[i];
     }
@@ -38,7 +40,18 @@ int main() {
     for (int i = 0; i < M; i++) {
     	cin >> c[i];
     }
+    for (int i = 0; i < N; i++) {
+        m[N] = -1;
+    }
 
+    for (int i = 0; i < M; i++) {
+        if (m[b[i]] != -1)
+            continue;
+        else {
+            m[b[i]] = 1;
+            for (int j = b[i]; )
+        }
+    }
     // Feels like the overflow is what's getting to me
     // Need to figure out an easy solution to managing the overflow
     /*
@@ -59,6 +72,7 @@ int main() {
     
     for (long i = 0; i < M; i++) {
        for (long j = b[i]; j <= N; j+= b[i]) {
+            cout << "a[j-1] = " << a[j-1] << " b[i] = " << b[i] << " j = " << j << " i = " << i <<" N = " << N << endl;
             if (a[j-1] > mod) {
                 a[j-1] = a[j-1] % mod;
                 a[j-1] *= c[i];
