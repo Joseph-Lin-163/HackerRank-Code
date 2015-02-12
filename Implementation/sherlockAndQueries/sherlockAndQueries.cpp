@@ -41,21 +41,33 @@ int main() {
 
     // Feels like the overflow is what's getting to me
     // Need to figure out an easy solution to managing the overflow
+    /*
     for (int i = 0; i < M; i++) {
         for (int j = 1; j <= N; j++) {
             if (j % b[i] == 0) {
-                a[j-1] *= c[i];
-        }
-    }
-
-    // Attempt 2, got sample case, but still fail
-    /*
-    for (long i = 0; i < M; i++) {
-       for (long j = b[i]; j <= N; j+= b[i]) {
-            a[j-1] *= c[i];
+                if (a[j-1] > mod) {
+                    a[j-1] = a[j-1] % mod;
+                    a[j-1] *= c[i];
+                }
+                else
+                    a[j-1] *= c[i];
+            }
         }
     }
     */
+    // Attempt 2, got sample case, but still fail
+    
+    for (long i = 0; i < M; i++) {
+       for (long j = b[i]; j <= N; j+= b[i]) {
+            if (a[j-1] > mod) {
+                a[j-1] = a[j-1] % mod;
+                a[j-1] *= c[i];
+            }
+            else
+                a[j-1] *= c[i];
+        }
+    }
+    
 
     // Attempt 1, fail
     /*
@@ -73,9 +85,11 @@ int main() {
     	}
     }
     */
-    for (int i = 0; i < N; i++) {
+    int i;
+    for (i = 0; i < N - 1; i++) {
     	cout << (a[i] % mod) << " ";
     }
+    cout << (a[i] % mod);
 
     return 0;
 }
