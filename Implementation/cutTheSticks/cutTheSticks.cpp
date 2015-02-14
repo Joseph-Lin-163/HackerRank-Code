@@ -18,7 +18,32 @@ int main() {
     		min = sticks[i];
     }
 
-    
+    bool allZero = false;
+    while (!allZero) {
+    	int keepTrack = 0;
+    	int newMin = 1001;
+    	for (int i = 0; i < n; i++) {
+	    	if (sticks[i] > 0) {
+	    		sticks[i] -= min;
+	    		if (sticks[i] > 0 && sticks[i] < newMin)
+	    			newMin = sticks[i];
+	    		keepTrack++;
+    		}
+    	}
+    	min = newMin;
+    	if (keepTrack == 0)
+    		allZero = true;
+    	else {
+    		/*
+    		for (int i = 0; i < n; i++) {
+    			cout << sticks[i] << " ";
+    		}
+    		cout << endl;
+    		cout << "min = " << min << " kt = " << keepTrack << endl;
+    		*/
+    		cout << keepTrack << endl;
+    	}
+    }
 
     return 0;
 }
